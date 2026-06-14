@@ -1,0 +1,6 @@
+corpus/
+output/
+*.gguf
+__pycache__/
+*.pyc
+evals/generations/
