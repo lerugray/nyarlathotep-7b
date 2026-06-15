@@ -55,6 +55,12 @@ advice, or reassurance.
   a canonical mythos term, not a slur, and survives the word-boundary filter by design.
 - **Period diction.** It writes in the archaic, ornate cadence of the old weird tale.
 
+## Landing page
+
+Interactive demo and model notes: **https://lerugray.github.io/nyarlathotep-7b/**
+
+Part of [The Elect](https://lerugray.github.io/the-elect/) — a one-person lab making small, local language models tuned to the voices of dead radicals.
+
 ## License
 
 Apache-2.0. The source fiction is public domain and the base model is Apache-2.0, so the

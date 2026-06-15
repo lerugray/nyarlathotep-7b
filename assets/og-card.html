@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1200">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: #020304;
+    font-family: 'Courier New', 'Lucida Console', monospace;
+  }
+
+  /* Starfield dots */
+  .stars {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(1px 1px at 8%  12%, rgba(26,255,122,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 5%,  rgba(196,200,204,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 72% 18%, rgba(26,255,122,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 8%,  rgba(196,200,204,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 48% 22%, rgba(196,200,204,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 55%, rgba(26,255,122,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 45%, rgba(196,200,204,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 75%, rgba(26,255,122,0.20) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 88%, rgba(196,200,204,0.20) 0%, transparent 100%),
+      radial-gradient(2px 2px at 55% 40%, rgba(26,255,122,0.12) 0%, transparent 100%);
+  }
+
+  /* Subtle glow behind name */
+  .glow-blob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(26,255,122,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .card {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 80px;
+  }
+
+  /* Top and bottom border lines */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 28px; left: 60px; right: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #097a38, transparent);
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    bottom: 28px; left: 60px; right: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #097a38, transparent);
+  }
+
+  .lab-tag {
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: #4a5258;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .name {
+    font-size: 96px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #c4c8cc;
+    line-height: 1;
+    margin-bottom: 20px;
+    text-shadow:
+      0 0 80px rgba(26,255,122,0.22),
+      0 0 30px rgba(26,255,122,0.10);
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 640px;
+    margin-bottom: 20px;
+  }
+
+  .div-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #054f24);
+  }
+
+  .div-line:last-child {
+    background: linear-gradient(90deg, #054f24, transparent);
+  }
+
+  .div-mark {
+    color: #097a38;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+  }
+
+  .epithet {
+    font-size: 18px;
+    color: #097a38;
+    letter-spacing: 0.06em;
+    font-style: italic;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+
+  .tags {
+    display: flex;
+    gap: 14px;
+  }
+
+  .tag {
+    font-size: 13px;
+    color: #097a38;
+    border: 1px solid #054f24;
+    padding: 4px 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgba(26,255,122,0.03);
+  }
+</style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="glow-blob"></div>
+  <div class="card">
+    <div class="lab-tag">The Elect &mdash; Voice Lab</div>
+    <div class="name">NYARLATHOTEP</div>
+    <div class="divider">
+      <span class="div-line"></span>
+      <span class="div-mark">&#x25C6;</span>
+      <span class="div-line"></span>
+    </div>
+    <div class="epithet">The Crawling Chaos, rendered in seven billion parameters</div>
+    <div class="tags">
+      <span class="tag">Qwen2.5-7B</span>
+      <span class="tag">Local Ollama</span>
+      <span class="tag">Apache-2.0</span>
+    </div>
+  </div>
+</body>
+</html>

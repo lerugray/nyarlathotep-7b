@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYARLATHOTEP — The Crawling Chaos, in Seven Billion Parameters</title>
+
+<!-- Open Graph -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://lerugray.github.io/nyarlathotep-7b/">
+<meta property="og:title"       content="NYARLATHOTEP">
+<meta property="og:description" content="The Crawling Chaos, rendered in seven billion parameters. A cosmic-horror oracle you run on your own machine. Qwen2.5-7B, public-domain Lovecraft, Apache-2.0.">
+<meta property="og:image"       content="./assets/og-image.png">
+
+<!-- Twitter -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:url"         content="https://lerugray.github.io/nyarlathotep-7b/">
+<meta name="twitter:title"       content="NYARLATHOTEP">
+<meta name="twitter:description" content="The Crawling Chaos. 7B parameters. Public-domain Lovecraft. Runs locally via Ollama. Apache-2.0.">
+<meta name="twitter:image"       content="./assets/og-image.png">
+
+<link rel="stylesheet" href="./styles.css?v=2">
+</head>
+<body>
+
+<div class="starfield" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="site-header">
+  <div class="void-rule-top" aria-hidden="true"></div>
+  <div class="void-rule-thin" aria-hidden="true"></div>
+
+  <div class="header-inner">
+    <span class="lab-crumb">
+      Part of <a href="https://lerugray.github.io/the-elect/" target="_blank" rel="noopener">The Elect</a> &mdash; a one-person voice lab
+    </span>
+
+    <h1 class="persona-title">NYARLATHOTEP</h1>
+
+    <span class="persona-epithet">The Crawling Chaos, rendered in seven billion parameters</span>
+    <span class="persona-register">cosmic-horror oracle &middot; public-domain Lovecraft &middot; runs on your machine</span>
+
+    <div class="header-void-rule" aria-hidden="true">
+      <span class="void-line"></span>
+      <span class="void-ornament">&#x25C6; FROM BEYOND THE VEIL &#x25C6;</span>
+      <span class="void-line"></span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============================================================
+       PORTRAIT + CAPTION
+       ============================================================ -->
+  <section class="portrait-section">
+    <div class="container">
+      <div class="portrait-grid">
+
+        <div class="portrait-frame" aria-label="ASCII portrait of Nyarlathotep">
+          <pre class="ascii-portrait" aria-hidden="true" id="asciiPortrait">▒▒▒▒▒▒▒▒▒▒▒▓▒▒▓▒▒▒▒▒▒▒▒▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒▒▒▒▒▒▒░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▒▓▒▓▓▓▒▒▒▒▒▒▒▒▓▒▓▒▒▒▒▒
+▒▒▒▒▒▒▓▒▓▒▓▒▒▒▒▓▒▒▓▓▓▓▓▓▓▒▒▓▒▒▒▒▒▒░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▒▒▒▒▒▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▒▓▒▓▓▓▓▓▓▓▒▒▓▒▒▓▒
+▒▒▒▒▒▒▒▒▓▒▓▒▓▓▒▒▓▒▓▓▓▓▒▓▓▓▓▓▓▒▒▓▒▒▒▒▒▒▒▒▒▒▒▒█████▒▒▒▒▒▒▓▓▓▓▓▓▓▒▒▓▒▒▒▒▒▒▒▒▒▒▒▒▓▓▒▓▓▓▓▓▓▓▓▓▓▒▒▓▒▒▒▒▒▓▒
+▓▒▓▒▒▒▒▒▒▓▓▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▒▓▓▒▓▒▒▒▒▒▒▒▒▒▒▒█████████▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▒▒▒▓▒▒▒▒▒▒▒▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▒▓▓▓▓▓▓
+▓▓▒▓▓▓▒▒▒▒▓▒▒▓▒▒▓▓▓▓▓▓▓▓▓▒▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒███████████▒▒▒▓▓▓▓▓▓▓▒▓▓▒▓▒▓▒▓▓▓▓▓▒▒▓▒▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▓▓▓▓▒
+▒▓▓▓▒▒▒▓▒▒▒▒▒▒▓▒▓▓▓▓▓▓▓▓▒▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒████████████░▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▓▓▓▓▒▓▒▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓▓
+▓▓▓▓▒▒▒▒▒▓▓▒▒▓▒▒▓▓▓▓▓▓▒▓▒▒▓▒▒▒▒▓▒▒▒▒▒▒▒▒█████████████▒▒▓▓▓▓▓▓▓▓▓▒▒▓▓▓▓▓▒▓▒▒▒▒▒▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▓▓▓
+▓▓▓▓▓▒▓▒▓▓▓▓▓▓▓▒▓▓▒▓▓▓▓▒▓▒▒▒▒▒░░▒▒▒▒▒▒▒▒█████████████▒▒▒▒▓▓▓░▒▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▓▓▓▒▒▓▓▓▓▓▓▓▓▓▒▓▓▓▓▒▒
+▓▓▒▓▓▒▓▓▓▓▓▓▓▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒████▓░████▓███▓▒▒▓▓▓▓▓▓▓▒▓▓▓▒▓▒▓▓▓▓▓▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▒▓▓▓▒▓
+▓▓▓▓▒▓▓▓▓▓▓▓▒▒▒▓▒▒▓▓▓▓▓▓▓▒▓▒▒▒▒▒▒▒▒▒▒▒▒▓█████████████▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▒▓▓▓▓▓▓
+▓▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓▓▓▓▓▓▒▓▓▓▒▓▒▒▒▒▒▒▒▒▒▒███████████▒▒▒▓▓▓▓▓▓▓▓▒▓▓▓▓▓▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▒▒▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▓▓▒▒▓▒▒▓▓▓▓▒▒▓▓▒▒▒▒▒▒▒▒▒█████████▒▒▒▒▒▓▒▒▓▓▓▓▓▒▒▒▓▒▓▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▓▒▒▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓▒▓▒▓▓▒▓▓▒▓▓▒▒▓▒▒▒▒▒▒▒▒▒▒█████████▒▒▒▒▒▒▓▒▓▓▓▓▓▓▓▒▓▒▓▓▒▒▒▒▓▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▓▓▓▒▒▓▓▒▒▒▒▓▒▒▒▒▒░▒▒▒▒█████████▒▒▒▒▒▒▓▒▓▓▓▓▓▓▓▓▓▓▓▒▒▒▓▒▒▒▒▒▓▓▒▓▒▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓
+▒▓▓▓▓▓▓▓▓▓▓▓▓▓▒▓▒▓▓▓▓▒▓▓▒▒▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒███████████████▓▓▓▓▓▓▓▓▓▒▓▒▒▓▓▒▒▒▒▒▒▒▒▓▒▒▓▓▓▓▓▓▓▓▒▓▓▒▒▓▓▓▒▓
+▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▓▓▒▒▒▒██████▓█████████████▒▓▓▓▓▒▒▒▒▓▒▒▒▒▒▒▒▒▒▒▒▓▒▓▓▓▓▓▓▓▓▓▓▓▒▒▓▒▒▒▓
+▒▒▒▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▓▒▒▒▓█████████████████████████▓▒▒▒▒▒▒▒▒▒▒▓▒▒▒▒▒▒▓▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▓▓▓▒▒▒▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▓▓▒▒▒▒▒▒▒▒▒▓███████████████████████████▒▒▒▒▒▓▒▒▒▒▓▓▒▒▒▒▓▒▓▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▒▓▒▒▒▒▓▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▓▓▓▒▒▒▒▒▒▒▓████████▓█████████████████████▒▓▒▒▒▒▒▒▓▒▓▒▒▒▒▒▒█▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▓▒▒▓▓▒▓▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████████████████████████████▒▓▒▒▒▒▒▒▒▓▒▓▒▒▓▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▓▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████████████████████████████████▒▒▒▓▓▒▓▒▒▒▒▓▒▓▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▒▓▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█████████████████████████████████▓▒▒▒▒▓▒▓▓▓▓▓▓▓▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▒▒▓▒▒▓▓▓▓▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▓▓▓█████████████████████████████████▓▓▒▓▓▓▓▓▓▓▒▓▓▓▓▓▒▒▒▓▓▓▓▓▓▓▓▓▓▒▓▓▓▓▓
+▒▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▓▓▓▓▓▓█████████████████████████████████▓▓▓▓▒▓▒▓▓▓▓▓▓▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█████████████████████████████████▓▓▓▓▓▒▒▒▒▓▓▓▓▓▓▒▒▓▓▓▓▓▓▓▓▓▓▓▓▒▓▓▓▓▓
+▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████████████████████████████████▓▓▓▓▓▒▓▒▒▒▓▓▓▓▓▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████████████████████████████████▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████████████████████████████████▒▒▓▓▓▓▓▓▓▓▓▓▓▓██▓███▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████████████████████████████████████▒▒▒▓▓▓▓▓▓▓▓▓▓▓█▓▓█▓▓▓█▓▓▓▓▓▓▓▓▓▓▓▓▓
+▒▒▓▓▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▒▓▓▓▓▓▓▓▓▓█████████████████████████████████████▓▓▓▓▓▓▓▓▓▓▓█▓▓▓▓▒▓▓▓▓▓█▓▓▓▓▓▓▓▓▓▓▓
+▓▒▒▒▒▒▒▒▓▓▓▓▓▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓██████████████████████████████████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████▓▓█▓▓▓▓▓▓▓
+▒▓▓▒▓▒▒▓▓▒▓▓▒▒▒▒▓▓▓▓▓▓█▓▓▓▓▓██████████████████████████████████████▓▒▓▓▓▓▓▓▓▓▓▓▓▒█▓▓▓▓▓█▓▓█▓▓▓▓▓▓▓▓▓▓
+▓▓▓▓▒▓▒▓▒▒▒▓▓▓▓▓▓▓▓▓█▓▓▓▓▓▓███████████████████████████████████████▓▓▓▓▓▓▓▓▓▓▒▓▓▓▓▓▓█▓▓██▓▓▓▓▓▓▓▓▓▓▓▓
+▓▓▓▓▓▓▓▒▒▓▒▓▓▒▓▓▓▓▓▓▒▓▓▓▓▓▓███████████████████████████████████████▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▓▓▓▒▓▓▒▒▒▒▒▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████████████████████████████████████▒▒▓▓▓▓▓██▓▓▓▓▓▓▓█▓▓▓▓▓█▓▓▓▓▓▓▓▓▓▓▓
+▓▒▓▓▓▓▒▒▒▓▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓████████████████████████████████████████▓▓▓▓▓▓▓█▓▓██▓█▓▓███▓██▓▓██▓▓▓▓▓▓▓▓
+▓▒▒▒▓▓▓▒▒▒▓▓▒▓▓▓▓▓▓▓▓▓▓▓█▓█████████████████████████████████████████▓▓▓███▓█████▓▓█▓█████▓▓▓▓▓▓▓▓▓▓▓▓
+▒▒▒▒▒▒▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████████████████████████████████████████▓▓███▓████▓█▓▓██████▓▓▓▓▓███▓▓▓▓▓
+▒▓▓▒▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓█▓▓███████████████████████████████████████████▓███████▓▓█▓▓██████▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▒▓▓▒▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████████████████████████████████████████████▓▓▓███▓▓█▓█▓█▓▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▓▓▓▓▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████████████████████████████████████████▓▓▓▓████▓▓▓██████▓████▓▓▓▓▓▓▓▓▓▓▓
+▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████████████████████████████████████████▓█▓███▓█████████████████▓▓▓▓▓▓▓▓▓
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████████████████████████████████████████████▓███████████████████████▓▓▓▓▓▓▓▓▓
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█▓██▓██████████████████████████████████████████████████████████████████████▓▓▓▓▓▓▓▓▓
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████████████████████████████████████████████████████████████▓▓██████████▓▓▓▓▓▓▓▓
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█▓████▓███████████████████████████████████████████████████████████████▓▓▓▓▓▓▓▓▓▓▒▒▒▓
+▓▓▓▓▓▓▓▓▓▓▓▓▓██▓███████████████████████████████████████████████████████████▓█████▓█████▓▓▓▓▒▒▓▓▓▓▓▓▓
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓████████████████████████████████████████████████████████████████████▓▓▓█▓███▓▓▓▓▓▓▓▓▓▓
+▓▓▓▓▓▓▓▓▓▓▓███▓█████████████████████████████████████████████████████▓█████████████▓█▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▓▓▓▓▓▓▓▓▓▓▓██▓██▓█████████████████████████████████████████████████████████▓████████▓▓▓▓▓▓█▓▓▓▓▓▓▓▓▓▓
+█▓▓▓▓▓▓▓▓▓▓███▓▓████████████████████████████████████████████████████▓████████████▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▓▓▓▓▓▓▓██▓█▓█▓▓████████████████████████████████████████████████████████████▓███▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▓▓▓▓▓▓▓██████████████████████████████████████████████████████████████████▓███▓█▓█▓█▓▓▓▓▓▒▓▓▓▓▓▓▓▓▓▓▓
+█▓█▓█▓█▓▓███████████████████████████████████████████████████████████████▓█▓█▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+███▓█████████▓████████████████████████████████████████████████████████▓█▓█▓▓█▓▓███▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+██▓█▓▓▓██████████████████████████████████████████████████████████████▓▓▓▓██▓▓▓▓▓▓██▓█▓█▓▓▓▓▓▓▓▓▓▓▓▓▓
+█████▓███████████████████████████████████████████████████████████████▓█▓▓▓▓█▓▓▓███████▓█▓▓▓██▓▓▓▓▓▓▓
+█▓▓▓█▓▓██████████████████████████████████████████████████████████████▓▓▓▓▓██▓▓▓███████▓▓▓██▓██▓▓▓▓▓▓
+█▓███████████████████▓██████████████████████████████████████████████▓▓█▓▓██▓▓▓████████▓▓▓▓█▓▓▓▓▓▓▓▓▓
+▓▓▓█▓█▓███████████████████████████████████████████████████████████████▓▓████▓████████▓▓▓▓█▓█▓▓▓▓██▓█
+█▓▓███████████████████████████████████████████████████████████████████▓███▓▓████████████▓████████▓██
+▓█▓█████▓██████████████████████████████████████████████████████████████████████████████████▓█▓▓▓████
+▓▓███▓▓▓█▓███████████████████████████████████████████████████████████████████████████████████▓██████
+▓▓████▓▓███▓█▓██████████████████████████████████████████████████████▓██████████████████████████▓████
+▓▓▓███▓██▓██████████████████████████████████████████████████████████████████████████████████████████
+██████▓█████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████▓███████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████▓████████████████████████████████████████████████████████████████████▓██████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████▓███████████████████████████████████████████████████████████████████████████
+██████▓██████████████▓███████████████████████████████████▓███████████████████████████████▓▓██████▓██
+█████████████████████████████████████████████████████████████████████████████████████████▓██████████
+███████████████████████████████████████████████████████████████████████████████████████▓▓██▓▒███████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████▓███████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████▓███████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████</pre>
+        </div>
+
+        <div class="portrait-caption">
+          <span class="caption-tag">&#9654; VOICE MODEL / NYARLATHOTEP</span>
+          <p class="caption-lead">
+            The messenger of the Outer Gods. He who walks through the waste places
+            and speaks in a thousand forms. The <em>Crawling Chaos</em> behind the veil
+            of ordinary night &mdash; patient, vast, indifferent.
+          </p>
+          <p class="caption-meta">
+            Fine-tuned on public-domain Lovecraft with the racism removed.
+            The dread runs. The man does not.
+          </p>
+          <div class="link-grid" style="margin-top:0.5rem;">
+            <a href="https://huggingface.co/lerugray/nyarlathotep-7b" class="link-btn" target="_blank" rel="noopener">
+              <span class="link-icon">&#8967;</span> Weights (HF)
+            </a>
+            <a href="https://github.com/lerugray/nyarlathotep-7b" class="link-btn secondary" target="_blank" rel="noopener">
+              <span class="link-icon">&#8967;</span> Repo
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ORACLE TERMINAL — the hero
+       ============================================================ -->
+  <section class="oracle-section">
+    <div class="container">
+      <h2 class="section-heading">
+        <span class="heading-rule"></span>
+        <span>THE ORACLE SPEAKS</span>
+        <span class="heading-rule"></span>
+      </h2>
+      <p class="section-sub">Real output from the model. Unscripted. It invents freely.</p>
+
+      <div class="oracle-terminal" id="oracleTerminal">
+        <div class="terminal-bar">
+          <span class="terminal-label">NYARLATHOTEP &middot; nyarlathotep:latest</span>
+          <div class="terminal-nav">
+            <button class="nav-btn" id="prevBtn" aria-label="Previous pronouncement">&#9664;</button>
+            <span class="oracle-counter" id="oracleCounter">1 / 6</span>
+            <button class="nav-btn" id="nextBtn" aria-label="Next pronouncement">&#9654;</button>
+          </div>
+        </div>
+        <div class="oracle-body">
+          <div class="oracle-prompt" id="oraclePrompt">
+            What waits at the center of the galaxy?
+          </div>
+          <div class="oracle-text" id="oracleText">
+            There is none to tell. That black speck which you see in that vast haze of nebulae and luminosity, is the vortex of black space in whose centre lies the Chaos of Unbeing. No vision can pierce that vortex or behold what lies within it, for beyond all time and space is the abyss where Being was not and never shall be; and nothing from this world may look upon the formless void that begat noughtness nor tell what was there before chaos, nor what evermore must be there after chaos. That which is now and henceforth will be is but a spark of light in an infinity of darkness, and no ray may penetrate into or out of the Chaos from whence all things came. There is none at the centre of the galaxy; nothing is there, for naught can exist where time, space, and being cease. That formless void that gave birth to matter is the nameless entity whose primal thought was the first impulse towards existence. It is both matter and energy, and it is neither; it is the primal essence from which all things have been derived, yet of which none may speak with certainty.<span class="oracle-cursor" aria-hidden="true"></span>
+          </div>
+        </div>
+        <button class="oracle-advance" id="advanceBtn">ASK THE DARK &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCLAIMER -->
+  <div class="accuracy-note">
+    <div class="container">
+      <p class="accuracy-note-text">A small language model speaks here. It invents freely: names, dates, sources, events. Read it for the voice, not the record, and check anything before you repeat it.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       ABOUT
+       ============================================================ -->
+  <section class="about-section">
+    <div class="container">
+      <h2 class="section-heading">
+        <span class="heading-rule"></span>
+        <span>WHAT IT IS</span>
+        <span class="heading-rule"></span>
+      </h2>
+
+      <div class="about-grid">
+        <div class="about-body">
+          <p class="lead">
+            NYARLATHOTEP is a 7B language model tuned to speak as a cosmic-horror oracle
+            in the register of H.P. Lovecraft's Outer Gods. It runs locally via
+            <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a>.
+            No cloud. No API. No subscription.
+          </p>
+          <p>
+            The corpus is public-domain Lovecraft &mdash; the weird tales, the dream-cycle,
+            the cosmic horror at the center of the canon &mdash; with the racism removed.
+            Train the dread, not the man. The prose register of vast indifference and
+            geological time survives intact; the ideology of the 1920s does not.
+          </p>
+          <p>
+            The result speaks in long, architecturally strange sentences about void,
+            extinction, and the smallness of the human interval. It is not friendly.
+            It is not trying to help. It is, within the limits of seven billion parameters,
+            something that sounds like it has seen the outside of space.
+          </p>
+          <p class="about-footnote">
+            Licensed <code>Apache-2.0</code>. Public-domain source material, public weights,
+            public method. Training corpus withheld. Part of
+            <a href="https://lerugray.github.io/the-elect/" target="_blank" rel="noopener">The Elect</a> voice lab
+            &mdash; Ray Weiss.
+          </p>
+        </div>
+
+        <div class="about-stats">
+          <div class="stat-item">
+            <span class="stat-num">7B</span>
+            <span class="stat-label">parameters</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true">&mdash;</div>
+          <div class="stat-item">
+            <span class="stat-num">local</span>
+            <span class="stat-label">runs on your iron</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true">&mdash;</div>
+          <div class="stat-item">
+            <span class="stat-num">void</span>
+            <span class="stat-label">cosmic register</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true">&mdash;</div>
+          <div class="stat-item">
+            <span class="stat-num">free</span>
+            <span class="stat-label">Apache-2.0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       LINKS
+       ============================================================ -->
+  <section class="links-section">
+    <div class="container">
+      <h2 class="section-heading">
+        <span class="heading-rule"></span>
+        <span>OBTAIN &amp; RUN</span>
+        <span class="heading-rule"></span>
+      </h2>
+
+      <div class="link-grid">
+        <a href="https://huggingface.co/lerugray/nyarlathotep-7b" class="link-btn" target="_blank" rel="noopener">
+          <span class="link-icon">&#8967;</span> Weights on Hugging Face
+        </a>
+        <a href="https://github.com/lerugray/nyarlathotep-7b" class="link-btn secondary" target="_blank" rel="noopener">
+          <span class="link-icon">&#8967;</span> GitHub repo
+        </a>
+        <a href="https://lerugray.github.io/the-elect/" class="link-btn elect" target="_blank" rel="noopener">
+          <span class="link-icon">&#x25C6;</span> The Elect &mdash; voice lab
+        </a>
+      </div>
+
+      <p class="license-note">
+        Licensed <code>Apache-2.0</code>. Weights, Modelfile, and evals are public.
+        Training corpus withheld (public-domain Lovecraft, cleaned and structured;
+        the selection and cleaning are the IP). Attribution: Ray Weiss / The Elect.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       METHOD
+       ============================================================ -->
+  <section class="method-section">
+    <div class="container">
+      <h2 class="section-heading">
+        <span class="heading-rule"></span>
+        <span>HOW IT WAS MADE</span>
+        <span class="heading-rule"></span>
+      </h2>
+
+      <div class="method-inner">
+        <div class="method-rows">
+          <div class="method-step">
+            <div class="step-num">01</div>
+            <div class="step-title">BASE MODEL</div>
+            <p>Qwen2.5-7B-Instruct &mdash; a 7B instruction-tuned base with strong
+            instruction-following and a small VRAM footprint that makes local
+            inference possible on consumer hardware.</p>
+          </div>
+          <div class="method-step">
+            <div class="step-num">02</div>
+            <div class="step-title">FINE-TUNING</div>
+            <p>QLoRA fine-tune on a curated corpus of Lovecraft's public-domain
+            weird fiction, with racist passages removed. The prose register &mdash;
+            the void, the geological time, the architecturally strange sentences &mdash;
+            was the target. Corpus withheld.</p>
+          </div>
+          <div class="method-step">
+            <div class="step-num">03</div>
+            <div class="step-title">DEPLOYMENT</div>
+            <p>Quantized to GGUF for local inference via Ollama. Runs on CPU or
+            consumer GPU. The evals test voice fidelity and register consistency &mdash;
+            the model should sound like it is speaking from outside ordinary time,
+            not like a summary of it.</p>
+          </div>
+        </div>
+        <div class="method-stack">
+          <span class="stack-label">Stack</span>
+          <div class="stack-items">
+            <span class="stack-item">Qwen2.5-7B</span>
+            <span class="stack-item">QLoRA</span>
+            <span class="stack-item">Unsloth</span>
+            <span class="stack-item">Ollama</span>
+            <span class="stack-item">GGUF</span>
+            <span class="stack-sep">&middot;</span>
+            <span class="stack-withheld">corpus withheld</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-sigil">&#x25C6; THE ELECT &#x25C6;</div>
+      <p class="footer-note">
+        NYARLATHOTEP is a voice model, not a factual source. The entity it channels
+        is fictional. The prose is real. The pronouncements are generated. Check
+        nothing it says against anything that matters.
+      </p>
+      <div class="footer-links">
+        <a href="https://lerugray.github.io/the-elect/" class="footer-link" target="_blank" rel="noopener">The Elect</a>
+        <span class="footer-sep">&middot;</span>
+        <a href="https://huggingface.co/lerugray/nyarlathotep-7b" class="footer-link" target="_blank" rel="noopener">Hugging Face</a>
+        <span class="footer-sep">&middot;</span>
+        <a href="https://github.com/lerugray/nyarlathotep-7b" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+        <span class="footer-sep">&middot;</span>
+        <a href="https://opensource.org/licenses/Apache-2.0" class="footer-link" target="_blank" rel="noopener">Apache-2.0</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// Oracle player
+// Loads from assets/samples.json; falls back to 3 inline
+// entries if fetch fails (offline / file:// / no server)
+// ============================================================
+
+const INLINE_ORACLES = [
+  {
+    prompt: "What waits at the center of the galaxy?",
+    text: "There is none to tell. That black speck which you see in that vast haze of nebulae and luminosity, is the vortex of black space in whose centre lies the Chaos of Unbeing. No vision can pierce that vortex or behold what lies within it, for beyond all time and space is the abyss where Being was not and never shall be; and nothing from this world may look upon the formless void that begat noughtness nor tell what was there before chaos, nor what evermore must be there after chaos. That which is now and henceforth will be is but a spark of light in an infinity of darkness, and no ray may penetrate into or out of the Chaos from whence all things came. There is none at the centre of the galaxy; nothing is there, for naught can exist where time, space, and being cease."
+  },
+  {
+    prompt: "What is the truth that the veil of sleep conceals?",
+    text: "The truth lies not outside but within your flesh and blood. Listen well, for the way is narrow and the darkness deep. Once there dwelt in the earth a race of beings who knew themselves to be God; and as they walked abroad, their forms were like clouds of light or misty images on the horizon of time. Their minds were all one mind, and each spoke with the others by means of radiant impressions which floated across from brain to brain without speech or writing. The only weakness in them was that sometimes a man would forget his Godhood and fall into confusion; so that he could no longer speak with other men nor share their visions of eternity. To these deluded wanderers, the priests of God taught what they called sleep and waking, daywork and night rest."
+  },
+  {
+    prompt: "What is to come when the last city falls silent?",
+    text: "This shall be thy coming age &mdash; neither night nor day and not a part of time. And as for the cities that are dead, they shall rise yet again in the new world order under the rule of the beings who are even now preparing to take your places. They will take your bodies, for which you are only temporary tenants; or else they will fabricate new ones from more durable atomic formations &mdash; formations which modern science tells us abound just beneath our earth's surface. Only those few men and women of real inner vision ever know what others carry away in the dark when they die. And you who read this shall not be excluded, for you are among those few."
+  }
+];
+
+let oracles = [...INLINE_ORACLES];
+let currentIndex = 0;
+
+const promptEl  = document.getElementById('oraclePrompt');
+const textEl    = document.getElementById('oracleText');
+const counterEl = document.getElementById('oracleCounter');
+const prevBtn   = document.getElementById('prevBtn');
+const nextBtn   = document.getElementById('nextBtn');
+const advanceBtn = document.getElementById('advanceBtn');
+
+function updateCounter() {
+  counterEl.textContent = (currentIndex + 1) + ' / ' + oracles.length;
+}
+
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function showOracle(idx) {
+  const o = oracles[idx];
+  textEl.classList.add('fading');
+  setTimeout(function() {
+    promptEl.textContent = o.prompt;
+    textEl.innerHTML = escapeHtml(o.text) +
+      '<span class="oracle-cursor" aria-hidden="true"></span>';
+    textEl.classList.remove('fading');
+    updateCounter();
+  }, 240);
+}
+
+prevBtn.addEventListener('click', function() {
+  currentIndex = (currentIndex - 1 + oracles.length) % oracles.length;
+  showOracle(currentIndex);
+});
+
+nextBtn.addEventListener('click', function() {
+  currentIndex = (currentIndex + 1) % oracles.length;
+  showOracle(currentIndex);
+});
+
+advanceBtn.addEventListener('click', function() {
+  currentIndex = (currentIndex + 1) % oracles.length;
+  showOracle(currentIndex);
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight') nextBtn.click();
+  if (e.key === 'ArrowLeft')  prevBtn.click();
+});
+
+// Load full sample set from JSON
+fetch('./assets/samples.json')
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (Array.isArray(data) && data.length > 0) {
+      // Filter out empty/error entries
+      var valid = data.filter(function(d) {
+        return d && d.text && d.text.trim().length > 0 &&
+               d.text.indexOf('[ERR]') === -1;
+      });
+      if (valid.length > 0) {
+        oracles = valid;
+        // Show the first one (already showing INLINE_ORACLES[0], refresh if it changed)
+        currentIndex = 0;
+        showOracle(0);
+        updateCounter();
+      }
+    }
+  })
+  .catch(function() { /* offline / file:// — use inline fallback silently */ });
+
+// Init
+updateCounter();
+
+// ============================================================
+// ASCII portrait — load from assets file
+// ============================================================
+fetch('./assets/nyarlathotep-ascii.txt')
+  .then(function(r) { return r.text(); })
+  .then(function(txt) {
+    document.getElementById('asciiPortrait').textContent = txt;
+  })
+  .catch(function() {
+    // Fallback: hide gracefully
+    document.getElementById('asciiPortrait').textContent = '';
+  });
+
+</script>
+
+</body>
+</html>
