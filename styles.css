@@ -509,6 +509,27 @@ body {
   max-width: 680px;
 }
 
+.operator-disclaimer {
+  margin-top: 1rem;
+  max-width: 680px;
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--green-ember);
+  background: var(--green-faint);
+  padding: 0.85rem 1rem;
+}
+
+.operator-disclaimer p {
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.operator-disclaimer strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
 /* ============================================================
    ABOUT
    ============================================================ */
